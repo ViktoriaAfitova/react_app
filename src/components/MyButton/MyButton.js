@@ -1,8 +1,9 @@
 import React from 'react';
+import button from './MyButton.css';
 
-const MyButton = ({children, changeText}) => {
+const MyButton = ({children, action}) => {
 
-    return <button onClick={() => changeText('Thank you')}>{children}</button>
+    return <button className={'button'} onClick={() => action() }>{children}</button>
 }
 
 export default MyButton;
