@@ -31,7 +31,7 @@ const UserAdd = ({users, setUsers}) => {
                     onChange={onChange}
                 />
             )}
-            <button onClick={addNewUser}>Add new user</button>
+            <button className={'myBtn'} onClick={addNewUser}>Add new user</button>
         </>
     );
 };
