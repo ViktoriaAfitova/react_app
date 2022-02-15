@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import UserList from "./UserList";
-import UserAdd from "./UserAdd";
+import UserAdd from './UserAdd';
+import UserList from './UserList';
 
 const Users = () => {
     const [users, setUsers] = useState([
@@ -22,10 +22,10 @@ const Users = () => {
 
     ]);
     return (
-        <>
-            <UserList users={users}/>
+        <div className='container'>
             <UserAdd users = {users} setUsers = {setUsers}/>
-        </>
+            <UserList users={users}/>
+        </div>
     );
 };
 

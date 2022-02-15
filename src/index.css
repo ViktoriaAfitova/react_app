@@ -12,9 +12,6 @@ code {
     monospace;
 }
 
-.App {
-  padding: 2rem;
-}
 .userList {
   margin-bottom: 2rem;
 }
@@ -27,12 +24,4 @@ span {
   padding: 5px 15px;
   margin: 5px 0;
   border: 1px solid teal;
-}
-.myBtn {
-  padding: 5px 15px;
-  color: teal;
-  font-size: 14px;
-  background: transparent;
-  border: 1px solid teal;
-  cursor: pointer;
 }
