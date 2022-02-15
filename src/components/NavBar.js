@@ -18,6 +18,9 @@ const NavBar = () =>  {
                             <Link to="/counter" className="nav-link">Counter</Link>
                         </li>
                         <li className="nav-item">
+                            <Link to="/posts" className="nav-link">Posts</Link>
+                        </li>
+                        <li className="nav-item">
                             <Link to="/users" className="nav-link">Home</Link>
                         </li>
                     </ul>
@@ -27,4 +30,4 @@ const NavBar = () =>  {
   )
 }
 
-export default NavBar
+export default NavBar;
