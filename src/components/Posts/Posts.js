@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import div from './posts.css';
 
 const Posts = () => {
-    const [filteredPosts, setFilteredPosts] = useState([]);
-    const [sorter, setSorter] = useState(0)
+    const [sorter, setSorter] = useState(0);
+    const [searchQuery, setSearchQuery] = useState('');
     const [posts, setPosts] = useState (
     [{
         "userId": 1,
@@ -42,30 +42,33 @@ const Posts = () => {
         "body": "ut aspernatur corporis harum nihil quis provident sequi\nmollitia nobis aliquid molestiae\nperspiciatis et ea nemo ab reprehenderit accusantium quas\nvoluptate dolores velit et doloremque molestiae"
     }]
     )
-    useMemo(() => {
-        setFilteredPosts(posts);
-    }, [posts])
-    const onSearch = (e) => {
-        if (e.target.value) {
-           return setFilteredPosts(posts.filter((post) => post.title.toLowerCase().includes(e.target.value.toLowerCase())))
-        }
-        setFilteredPosts(posts);
-    }
-    const onSort = (e) => {
-        setSorter(+e.target.value);
-    }
+
     const deletePost = (id) => {
         const confirm = window.confirm('Do you really want to delete it?');
         if (confirm) {
             setPosts(posts.filter((post) => post.id !== id))
         }
     }
-    const doSort = (posts) => {
-        if (sorter) {
-            return posts.sort((a, b) => b.id - a.id)
-        }
-        return posts.sort((a, b) => a.id - b.id)
+
+    const onSearch = (e) => {
+        setSearchQuery(e.target.value);
     }
+
+    const onSort = (e) => {
+        setSorter(+e.target.value);
+    }
+
+    const sortedPosts = useMemo(() => {
+        if (sorter) {
+            return [...posts].sort((a, b) => b.id - a.id);
+        }
+        return posts
+    }, [sorter, posts])
+
+    const sortedAndSearchedPosts = useMemo(() => {
+        return sortedPosts.filter((post) => post.title.toLowerCase().includes(searchQuery.toLowerCase()))
+    }, [searchQuery, sortedPosts])
+
     return (
         <div className="container">
             <div className="input-group mt-3">
@@ -88,7 +91,7 @@ const Posts = () => {
                     <option value="1">from Max to Min</option>
                 </select>
             <div className="post-container">
-                {doSort(filteredPosts).map((post, index) =>
+                {sortedAndSearchedPosts.map((post, id) =>
                 <div className="card text-white bg-dark mb-3" key={post.id} style={{"maxWidth" : "18rem"}}>
                     <div className="card-header">{post.id}</div>
                     <div className="card-body">
