@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import MyButton from '../../components/UI/button/MyButton';
 
-const UserAdd = ({users, setUsers}) => {
+const UserAdd = ({users, setUsers, closeModal}) => {
     const onChange = (e) => {
         const field = e.target.id;
         setValues({...values, [field]:e.target.value})
@@ -14,6 +14,7 @@ const UserAdd = ({users, setUsers}) => {
             age: '',
             country: '',
         })
+        closeModal(false)
     }
 
     const [values, setValues] = useState( {

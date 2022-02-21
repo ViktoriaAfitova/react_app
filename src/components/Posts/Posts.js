@@ -1,7 +1,10 @@
 import React, { useMemo, useState } from "react";
+import MyModal from "../MyModal/MyModal";
 import div from './posts.css';
 
 const Posts = () => {
+    const [showModal, setShowModal] = useState(false);
+    const [currentPost, setCurrentPost] = useState(null);
     const [sorter, setSorter] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [posts, setPosts] = useState (
@@ -43,11 +46,14 @@ const Posts = () => {
     }]
     )
 
-    const deletePost = (id) => {
-        const confirm = window.confirm('Do you really want to delete it?');
-        if (confirm) {
-            setPosts(posts.filter((post) => post.id !== id))
-        }
+    const confirmDeletePost = (post) => {
+        setCurrentPost(post);
+        setShowModal(true);
+    }
+
+    const deletePost = () => {
+        setPosts(posts.filter((post) => post.id !== currentPost.id));
+        setShowModal(false);
     }
 
     const onSearch = (e) => {
@@ -91,17 +97,35 @@ const Posts = () => {
                     <option value="1">from Max to Min</option>
                 </select>
             <div className="post-container">
-                {sortedAndSearchedPosts.map((post, id) =>
-                <div className="card text-white bg-dark mb-3" key={post.id} style={{"maxWidth" : "18rem"}}>
-                    <div className="card-header">{post.id}</div>
-                    <div className="card-body">
-                        <h5 className="card-title">{post.title}</h5>
-                        <p className="card-text">{post.body}</p>
-                    </div>
-                    <button onClick={() => deletePost(post.id)} type="button" className="btn btn-danger">Danger</button>
-                </div>
-                )}
+                {sortedAndSearchedPosts.length
+                    ?
+                    sortedAndSearchedPosts.map((post, id) =>
+                        <div className="card text-white bg-dark mb-3" key={post.id} style={{"maxWidth" : "18rem"}}>
+                            <div className="card-header">{post.id}</div>
+                            <div className="card-body">
+                                <h5 className="card-title">{post.title}</h5>
+                                <p className="card-text">{post.body}</p>
+                            </div>
+                            <button onClick={() => confirmDeletePost(post)} type="button" className="btn btn-danger">Delete
+                            </button>
+                        </div>
+                )
+                :
+                <h3 className="mt-3">Posts not found</h3>
+                }
             </div>
+            <MyModal
+                visible={showModal}
+                saveBtnShow
+                closeBtnShow
+                onCancel={() => setShowModal(false)}
+                onConfirm={() => deletePost()}
+            >
+            <h4>do you really </h4>
+                </MyModal>
+
+
+
     </div>
     )
 }

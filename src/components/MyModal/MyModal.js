@@ -1,0 +1,57 @@
+import React from 'react';
+import './MyModal.css';
+
+const MyModal = ({
+				visible = false,
+                title,
+                saveBtnShow = false,
+                closeBtnShow = false,
+                children,
+                onCancel,
+                onConfirm
+                }) => {
+  return (
+    <div className={`md-modal ${visible ? 'md-show' : 'md-hidden'}`} tabindex="-1" onClick={onCancel}>
+        <div className="modal-dialog"
+            onClick={(e) => e.stopPropagation() }
+        >
+            <div className="modal-content">
+                <div className="modal-header">
+                    <h5 className="modal-title">{title}</h5>
+                    <button
+                        type="button"
+                        className="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                        onClick={onCancel}
+                    />
+                </div>
+                <div className="modal-body">
+                    {children}
+                </div>
+                <div className="modal-footer">
+                    {closeBtnShow &&
+                        <button
+                            type="button"
+                            className="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                            onClick={onCancel}
+                        >
+                            Cancel
+                        </button>}
+                    {saveBtnShow &&
+                        <button
+                            type="button"
+                            className="btn btn-primary"
+                            onClick={onConfirm}
+                        >
+                            Ok
+                        </button>}
+                </div>
+            </div>
+        </div>
+    </div>
+  )
+}
+
+export default MyModal;
