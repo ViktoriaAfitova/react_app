@@ -1,5 +1,6 @@
 import React from 'react';
 import MyButton from '../../components/UI/button/MyButton';
+import { Link } from 'react-router-dom';
 
 const UserList = ({ users, setUsers }) => {
 
@@ -25,11 +26,11 @@ const UserList = ({ users, setUsers }) => {
         <tbody>
         {users.map((user, index) =>
             <tr key={index}>
-            <th scope="row">{index + 1}</th>
-            <td>{user.name}</td>
-            <td>{user.age}</td>
-            <td>{user.country}</td>
-            <td><MyButton action={() => deleteUser(user.name)}>Delete</MyButton></td>
+                <th scope="row"><Link to={`/users/${user.id}`}>{user.id}</Link></th>
+                <td>{user.name}</td>
+                <td>{user.age}</td>
+                <td>{user.country}</td>
+                <td><MyButton action={() => deleteUser(user.name)}>Delete</MyButton></td>
             </tr>
         )}
         </tbody>

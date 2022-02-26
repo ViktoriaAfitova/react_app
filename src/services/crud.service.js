@@ -1,4 +1,4 @@
-import http from '../http'
+import http from '../http.js';
 
 export default class Crud {
     constructor(models) {

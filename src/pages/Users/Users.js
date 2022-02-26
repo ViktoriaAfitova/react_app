@@ -6,24 +6,24 @@ import UserList from './UserList';
 const Users = () => {
     const [showModal, setShowModal] = useState(false);
     const [users, setUsers] = useState([
-        // {
-        //     id: 1,
-        //     name: 'Franko',
-        //     age: 32,
-        //     country: "USA"
-        // },
-        // {
-        //     id: 2,
-        //     name: 'Mikolo',
-        //     age: 43,
-        //     country: "Italy"
-        // },
-        // {
-        //     id: 3,
-        //     name: 'Petro',
-        //     age: 20,
-        //     country: "Russia"
-        // },
+        {
+            id: 1,
+            name: 'Franko',
+            age: 32,
+            country: "USA"
+        },
+        {
+            id: 2,
+            name: 'Mikolo',
+            age: 43,
+            country: "Italy"
+        },
+        {
+            id: 3,
+            name: 'Petro',
+            age: 20,
+            country: "Russia"
+        },
 
     ]);
 

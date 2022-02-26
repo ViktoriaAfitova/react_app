@@ -11,7 +11,7 @@ const MyModal = ({
                 onConfirm
                 }) => {
   return (
-    <div className={`md-modal ${visible ? 'md-show' : 'md-hidden'}`} tabindex="-1" onClick={onCancel}>
+    <div className={`md-modal ${visible ? 'md-show' : 'md-hidden'}`} tabIndex="-1" onClick={onCancel}>
         <div className="modal-dialog"
             onClick={(e) => e.stopPropagation() }
         >

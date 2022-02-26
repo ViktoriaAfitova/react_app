@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import MyModal from "../MyModal/MyModal";
 import div from './posts.css';
 import Crud from "../../services/crud.service";
+import Spinner from "../Spinner";
 
 const Posts = () => {
     const postsCrud = new Crud('posts');
@@ -10,15 +11,18 @@ const Posts = () => {
     const [sorter, setSorter] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [posts, setPosts] = useState ([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         fetchAllPosts();
     }, [])
 
     const fetchAllPosts = async () => {
+        setLoading(true);
         postsCrud.getAll().then((res) => {
             console.log(res.data)
             setPosts(res.data);
+            setLoading(false);
         })
 
     }
@@ -76,10 +80,13 @@ const Posts = () => {
                     <option defaultValue value="0">from Min to Max</option>
                     <option value="1">from Max to Min</option>
                 </select>
-            <div className="post-container">
-                {sortedAndSearchedPosts.length
-                    ?
-                    sortedAndSearchedPosts.map((post, id) =>
+                {loading ?
+                    <Spinner />
+                    :
+                    <div className="post-container">
+                        {sortedAndSearchedPosts.length
+                            ?
+                        sortedAndSearchedPosts.map((post, id) =>
                         <div className="card text-white bg-dark mb-3" key={post.id} style={{"maxWidth" : "18rem"}}>
                             <div className="card-header">{post.id}</div>
                             <div className="card-body">
@@ -93,7 +100,8 @@ const Posts = () => {
                 :
                 <h3 className="mt-3">Posts not found</h3>
                 }
-            </div>
+            </div>}
+
             <MyModal
                 visible={showModal}
                 saveBtnShow
