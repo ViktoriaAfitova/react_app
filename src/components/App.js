@@ -1,23 +1,25 @@
-// import UserList from "./UsersPage/UserList";
-// import {users} from './UsersPage/Users';
-// import UserAdd from "./UsersPage/UserAdd"
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './NavBar';
 import AppRouter from './AppRouter';
 import { BrowserRouter } from 'react-router-dom';
+import AuthContext from '../context/context';
+import { useState } from 'react';
 
 const App = () => {
+  const [auth, setAuth] = useState(false); // {false = session: false, name: ''}
 
   return (
-    <div className="App">
-      {/* <UserList users={users}/>
-      <UserAdd /> */}
-      <BrowserRouter>
-        <NavBar />
-        <AppRouter />
-      </BrowserRouter>
-    </div>
+    <AuthContext.Provider value={{
+      auth,
+      setAuth
+    }}>
+      <div className="App">
+        <BrowserRouter>
+          <NavBar />
+          <AppRouter />
+        </BrowserRouter>
+      </div>
+    </AuthContext.Provider>
   );
 }
 

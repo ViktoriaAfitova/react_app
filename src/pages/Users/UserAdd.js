@@ -1,21 +1,28 @@
 import React, {useState} from 'react';
 import MyButton from '../../components/UI/button/MyButton';
+import Crud from '../../services/crud.service';
 
-const UserAdd = ({users, setUsers, closeModal}) => {
-    const onChange = (e) => {
-        const field = e.target.id;
-        setValues({...values, [field]:e.target.value})
-    }
+	const UserAdd = ({users, setUsers, closeModal}) => {
+		const usersCrud = new Crud('users');
+		console.log(usersCrud);
+		const onChange = (e) => {
+		const field = e.target.id;
+			setValues({...values, [field]:e.target.value})
+	}
 
-    const addNewUser = () => {
-        setUsers([...users, values])
-        setValues({
+	const addNewUser = (id) => {
+        usersCrud.create(id, values).then((res) => {
+          setUsers([...users, values])
+        	setValues({
             name: '',
             age: '',
             country: '',
+
         })
-        closeModal(false)
-    }
+        	console.log(res.data)
+			closeModal(false)
+        })
+	}
 
     const [values, setValues] = useState( {
         name: '',
