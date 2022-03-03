@@ -1,39 +1,37 @@
 import React, { useState, useContext } from "react";
 import AuthContext from "../../context/context";
+import http from "../../http";
+import { LOGIN } from "../../reducer/reducer";
 
 const Login = () => {
-	const { auth, setAuth } = useContext(AuthContext); // auth.session, setAuth.name
-	const [values, setValues] = useState({login:'', password: ''});
+	const { state, dispatch } = useContext(AuthContext);
+	const [values, setValues] = useState({username:'', password: ''});
 
 	const onChange = (e) => {
 		const field = e.target.id;
 			setValues({...values, [field]:e.target.value})
 	}
-	console.log(values)
 
-	const login = () => {
-		const user = {login: 'test@gmail.com', password: '12345'}
-		if (values.password === user.password && values.login === user.login) {
-			return setAuth(true)
-		}
+	const login = (e) => {
+    e.preventDefault();
+		http.post('https://fakestoreapi.com/auth/login', values).then((res) => {
+      dispatch({type: LOGIN, data: res.data.token });
+      window.localStorage.setItem('token', res.data.token)
+    }).catch((e) => console.log(e))
 	}
 
   return (
     <form className="container mt-5 col-4">
       <div className="mb-3">
-        <label htmlFor="exampleInputEmail1" className="form-label">
-          Email address
+        <label htmlFor="username" className="form-label">
+          Username
         </label>
         <input
-          type="email"
+          type="text"
           className="form-control"
-          aria-describedby="emailHelp"
-					id="login"
+					id="username"
 					onChange={onChange}
         ></input>
-        <div id="emailHelp" className="form-text">
-          We'll never share your email with anyone else.
-        </div>
       </div>
       <div className="mb-3">
         <label htmlFor="exampleInputPassword1" className="form-label">
@@ -49,7 +47,7 @@ const Login = () => {
       <div className="mb-3 form-check">
         <input
           type="checkbox"
-          class="form-check-input"
+          className="form-check-input"
           id="exampleCheck1"
 					onChange={onChange}
         ></input>
@@ -57,7 +55,7 @@ const Login = () => {
           Check me out
         </label>
       </div>
-      <button type="submit" className="btn btn-primary" onClick={login}>
+      <button className="btn btn-primary" onClick={login}>
         Submit
       </button>
     </form>

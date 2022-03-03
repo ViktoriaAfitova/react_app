@@ -8,9 +8,9 @@ import AuthContext from "../context/context";
 import Login from "./Login/Login";
 
 const AppRouter = () => {
-  const { auth } = useContext(AuthContext);
+  const {state} = useContext(AuthContext);
   return (
-    auth ?
+    state.auth ?
     <Routes>
       <Route path="/" element={<Users />} />
       <Route path="/users" element={<Users />} />

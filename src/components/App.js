@@ -3,15 +3,17 @@ import NavBar from './NavBar';
 import AppRouter from './AppRouter';
 import { BrowserRouter } from 'react-router-dom';
 import AuthContext from '../context/context';
-import { useState } from 'react';
+import { useReducer } from 'react';
+import { reducer } from '../reducer/reducer';
 
 const App = () => {
-  const [auth, setAuth] = useState(false); // {false = session: false, name: ''}
+  const auth = window.localStorage.getItem('token');
+  const [state, dispatch] = useReducer(reducer, {auth: false})
 
   return (
     <AuthContext.Provider value={{
-      auth,
-      setAuth
+      state,
+      dispatch
     }}>
       <div className="App">
         <BrowserRouter>
