@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Crud from "../../services/crud.service";
+import Context from "../../context/context";
+import { editUser } from "../../reducer/reducer";
 
 const UserEdit = () => {
   const userCrud = new Crud("users");
+  const [user, setUser] = useState({})
   const [error, setError] = useState("");
-  const [user, setUser] = useState({});
+  const {state, dispatch} = useContext(Context);
   const { id } = useParams();
 
   useEffect(() => {
@@ -13,8 +16,7 @@ const UserEdit = () => {
   }, []);
 
   const getUser = () => {
-    userCrud
-      .get(`${id}`)
+    userCrud.get(`${id}`)
       .then((res) => {
         setUser(res.data);
       })
@@ -32,7 +34,7 @@ const UserEdit = () => {
     e.preventDefault();
     userCrud.update(user.id, user).then((res) => {
       console.log("update");
-      setUser(res.data);
+      dispatch(editUser(res.data, user.id));
     });
   };
 

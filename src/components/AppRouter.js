@@ -4,11 +4,11 @@ import Users from "../pages/Users/Users";
 import Posts from "../components/Posts/Posts";
 import UserEdit from "../pages/Users/UserEdit";
 import NotFound from "../pages/NotFound";
-import AuthContext from "../context/context";
+import Context from "../context/context";
 import Login from "./Login/Login";
 
 const AppRouter = () => {
-  const {state} = useContext(AuthContext);
+  const { state } = useContext(Context);
   return (
     state.auth ?
     <Routes>

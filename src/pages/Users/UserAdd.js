@@ -1,24 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import MyButton from "../../components/UI/button/MyButton";
 import Crud from "../../services/crud.service";
+import { addUser } from "../../reducer/reducer";
+import Context from "../../context/context";
 
-const UserAdd = ({ users, setUsers, closeModal }) => {
+const UserAdd = ({ closeModal }) => {
+  const {state, dispatch} = useContext(Context)
   const usersCrud = new Crud("users");
   const onChange = (e) => {
     const field = e.target.id;
     setValues({ ...values, [field]: e.target.value });
   };
 
-  const addNewUser = (id) => {
-    usersCrud.create(id, values).then((res) => {
-      setUsers([...users, values]);
+  const addNewUser = () => {
+    usersCrud.create(values).then((res) => {
+      dispatch(addUser(res.data))
       setValues({
         name: "",
         age: "",
         city: "",
       });
       closeModal(false);
-    });
+    })
   };
 
   const [values, setValues] = useState({

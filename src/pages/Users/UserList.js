@@ -1,14 +1,18 @@
 import React, { useContext } from 'react';
 import MyButton from '../../components/UI/button/MyButton';
 import { Link } from 'react-router-dom';
-import div from './userList.css';
+import './userList.css';
+import Crud from '../../services/crud.service';
+import { deleteUser } from '../../reducer/reducer';
+import Context from '../../context/context';
 
 const UserList = ({ users, setUsers }) => {
-	const deleteUser = (name) => {
-    const confirm = window.confirm('Do you really want to delete it?')
-    if (confirm) {
-    setUsers(users.filter((user) => user.name !== name))
-    }
+  const usersCrud = new Crud('users')
+  const {state, dispatch} = useContext(Context)
+  console.log(users)
+
+	const removeUser = (id) => {
+    dispatch(deleteUser(id))
   }
 
   return (
@@ -28,8 +32,9 @@ const UserList = ({ users, setUsers }) => {
           	<th scope="row"><Link className='nav-link' to={`/users/${user.id}`}>{user.id}</Link></th>
           	<td>{user.name}</td>
           	<td>{user.username}</td>
-          	<td>{user.address.city}</td>
-          	<td><MyButton action={() => deleteUser(user.name)}>Delete</MyButton></td>
+          	<td></td>
+            {/* {user.address.city}  */}
+          	<td><MyButton action={() => removeUser(user.id)}>Delete</MyButton></td>
           </tr>
         )}
       </tbody>
