@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import MyModal from "../MyModal/MyModal";
 import div from "./posts.css";
 import Crud from "../../services/crud.service";
@@ -16,10 +16,23 @@ const Posts = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const observer = useRef(null);
+  const trigger = useRef(null);
 
   useEffect(() => {
     fetchAllPosts();
   }, []);
+
+  useEffect(() => {
+    if (observer.current) observer.current.disconnect();
+    const callback = function(entries, observer) {
+      if (entries[0].isIntersecting) {
+        console.log('!!!')
+      }
+    }
+    observer.current = new IntersectionObserver(callback);
+    observer.current.observe(trigger.current)
+  }, [posts])
 
   const fetchAllPosts = async () => {
     setLoading(true);
@@ -124,6 +137,8 @@ const Posts = () => {
       >
         <h4>Are you sure?</h4>
       </MyModal>
+      <div ref={trigger}>I am a awesome block for hook useRef</div>
+      <button onClick={() => {console.log(observer.current.innerText = '1111')}}>Click</button>
     </div>
   );
 };

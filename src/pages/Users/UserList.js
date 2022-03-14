@@ -21,8 +21,8 @@ const UserList = ({ users, setUsers }) => {
         <tr>
           <th scope="col">#</th>
           <th scope="col">Name</th>
-          <th scope="col">Username</th>
-          <th scope="col">City</th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -31,10 +31,9 @@ const UserList = ({ users, setUsers }) => {
           <tr key={index}>
           	<th scope="row"><Link className='nav-link' to={`/users/${user.id}`}>{user.id}</Link></th>
           	<td>{user.name}</td>
-          	<td>{user.username}</td>
-          	<td></td>
-            {/* {user.address.city}  */}
-          	<td><MyButton action={() => removeUser(user.id)}>Delete</MyButton></td>
+          	<td>{user.email}</td>
+          	<td>{user.phone}</td>
+            <td><MyButton action={() => removeUser(user.id)}>Delete</MyButton></td>
           </tr>
         )}
       </tbody>

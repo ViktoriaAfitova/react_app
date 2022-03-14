@@ -17,8 +17,8 @@ const UserAdd = ({ closeModal }) => {
       dispatch(addUser(res.data))
       setValues({
         name: "",
-        age: "",
-        city: "",
+        email: "",
+        phone: "",
       });
       closeModal(false);
     })
@@ -26,14 +26,14 @@ const UserAdd = ({ closeModal }) => {
 
   const [values, setValues] = useState({
     name: "",
-    age: "",
-    country: "",
+    email: "",
+    phone: "",
   });
 
   return (
     <>
       {Object.keys(values).map((value, index) => {
-        if (value === "age") {
+        if (value === "email") {
           return (
             <input
               className={"user_input"}
